@@ -5,7 +5,9 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client   
 from langchain_openai import ChatOpenAI
 from langchain_mcp_adapters.tools import load_mcp_tools
-from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt import create_react_agent  # Note: deprecated, but still works
+from langchain_core.messages import HumanMessage
+
 
 
 load_dotenv()
@@ -17,12 +19,12 @@ async def main():
     print("Hello from mcp!")
     print("Starting MCP server as subprocess...")
     async with stdio_client(stdio_server_params) as (read, write):
-        print("✓ Server subprocess started and connected via stdio")
+        print("[OK] Server subprocess started and connected via stdio")
         async with ClientSession(read_stream=read, write_stream=write) as session:
             await session.initialize()
-            print("✓ Session initialized")
+            print("[OK] Session initialized")
             tools = await session.list_tools()
-            print(f"\n✓ Found {len(tools.tools)} tools from the server:")
+            print(f"\n[OK] Found {len(tools.tools)} tools from the server:")
             for tool in tools.tools:
                 print(f"  - {tool.name}: {tool.description.strip()}")
             
@@ -30,8 +32,17 @@ async def main():
             print("\n--- Testing the server by calling 'add' tool ---")
             result = await session.call_tool("add", arguments={"a": 5, "b": 3})
             print(f"Result: {result.content}")
+            tools = await load_mcp_tools(session)
+            print("langchain tools")
+            print(tools)
+             
+            agent = create_react_agent(llm, tools)
+            result = await agent.ainvoke({"messages": [HumanMessage(content="What is (3 + 4) * 10?")]})
+            print(result)
+            print(result["messages"][-1].content)
             
-    print("\n✓ Server subprocess terminated (connection closed)")
+            
+    print("\n[OK] Server subprocess terminated (connection closed)")
 
 if __name__ == "__main__":
     asyncio.run(main())
