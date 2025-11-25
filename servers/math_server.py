@@ -14,19 +14,30 @@ def add(a: int, b: int) -> int:
     """
     print(f"Adding {a} and {b}")
     return a + b
-    
-@mcp.tool()
-def subtract(a: int, b: int) -> int:
+
+
+@mcp.prompt()
+def get_research_prompt(topic: str) -> str:
     """
-    Subtract two numbers
+    Get a research prompt for a topic
     Args:
-        a: The first number
-        b: The second number
+        topic: The topic to get a research prompt for
     Returns:
-        The difference of the two numbers
+        A research prompt for the topic
     """
-    print(f"Subtracting {a} and {b}")
-    return a - b
+    return f"Research the topic {topic}"
+
+@mcp.tool()
+def get_research_result(prompt: str) -> str:
+    """
+    Get a research result for a prompt
+    Args:
+        prompt: The prompt to get a research result for
+    Returns:
+        A research result for the prompt
+    """
+    return f"The research result for the prompt {prompt}"
+    
     
 @mcp.tool() 
 def multiply(a: int, b: int) -> int:
@@ -42,5 +53,10 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
-
+    # Transport options:
+    # - "stdio" (default) - for Claude Desktop and stdio-based clients
+    # - "sse" - Server-Sent Events (for web clients)
+    # - "streamable-http" - HTTP transport (for HTTP clients)
+    # Note: Claude Desktop ONLY supports "stdio" transport
+    #mcp.run(transport="stdio")
+    mcp.run(transport="streamable-http")

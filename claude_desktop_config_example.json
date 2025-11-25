@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "tolga_math": {
+      "command": "C:\\tolga\\mcp\\mcp\\.venv\\Scripts\\python.exe",
+      "args": ["C:\\tolga\\mcp\\mcp\\servers\\math_server.py"]
+    }
+  }
+}
+
+
