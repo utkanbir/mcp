@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+      "playwright": {
+        "command": "D:\\nodejs\\npx.cmd",
+        "args": [
+          "@playwright/mcp@latest"
+        ]
+      }
+    }
+  }

@@ -35,3 +35,4 @@ mcp-inspector http http://localhost:8000
 npx @modelcontextprotocol/inspector stdio "C:\tolga\mcp\mcp\.venv\Scripts\python.exe" "C:\tolga\mcp\mcp\servers\math_server.py"
 ```
 
+
