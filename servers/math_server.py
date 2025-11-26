@@ -58,5 +58,5 @@ if __name__ == "__main__":
     # - "sse" - Server-Sent Events (for web clients)
     # - "streamable-http" - HTTP transport (for HTTP clients)
     # Note: Claude Desktop ONLY supports "stdio" transport
-    #mcp.run(transport="stdio")
-    mcp.run(transport="streamable-http")
+    mcp.run(transport="stdio")
+    #mcp.run(transport="streamable-http")
